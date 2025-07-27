@@ -1,0 +1,148 @@
+@font-face {
+	font-family: 'sahel';
+    src: url("font/Sahel.woff") format("woff"),
+	url(fonts/Sahel.woff2) format("woff2")
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'sahel';
+
+}
+body{
+     background-image: linear-gradient(to right, rgba(255, 0, 255, 0.600), rgba(0, 0, 255, 0.600) );
+     background-color: rgb(0, 0, 0);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+}
+.container{
+    background-color: rgba(255, 255, 255, 0.4);
+    max-width: 450px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 0 15px rgb(198, 198, 198);
+    border-radius: 35px 5px;
+    user-select: none;
+    margin: 10px;
+    overflow: hidden;
+}
+main{
+    width: 100%;
+}
+.input-todo{
+    display: flex;    
+    margin: 20px 0 15px 0;
+    overflow: hidden;
+}
+.input-todo input{
+    width: 91%;
+    height: 45px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 0 10px 10px 0;
+    background-color: rgba(245, 245, 245, 0.8);
+    font-size: 17px;
+}
+.input-todo button{
+    width: 9%;
+    height: 45px;
+    border: none;
+    outline: none;
+    background-color: rgba(245, 245, 245, 0.8);
+    border-radius: 10px 0 0 10px;
+    cursor: pointer;
+    color: rgb(0, 194, 0);
+    font-size: 25px;
+}
+.input-todo button i{
+    opacity: 0.5;
+}
+.todo-list li{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    height: 45px;
+    background-color: rgba(245, 245, 245, 0.3);
+    margin: 0 0 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: rgb(23, 23, 23);
+    
+}
+.todo-list li span{
+    color: rgb(223, 27, 66);
+    display: none;
+    font-size: larger;
+}
+.todo-list li:hover span{
+    display: block;
+}
+footer{
+    width: 100%;;
+}
+.info-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.info-box .pendingTasks{
+    margin-right: 10px;
+}
+.info-box button{
+    width: 30%;
+    padding: 5px;
+    margin-right: 50px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: medium;
+    background-color: lightblue;
+    color: rgb(42, 42, 42);
+    box-shadow: 0 0 3px lightblue;
+    cursor: pointer;
+    opacity: 0.5;
+}
+@media (max-width: 500px) {
+    .input-todo input {
+        width: 85%;
+        font-size: 14px;
+    }
+    
+    .input-todo button {
+        width: 15%;
+        font-size: 18px;
+        
+    }
+    
+    .info-box button {
+        width: 45%;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.todo-list li {
+    font-size: 14px;
+}
+.todo-list li span{
+    display: block;
+    width: 7%;
+}
+}
+
+.input-todo button.active i {
+    opacity: 1;
+}
+.info-box button.active{
+    opacity: 1;
+}
