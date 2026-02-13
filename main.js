@@ -1,72 +1,67 @@
-const addBtn = document.querySelector(".input-todo button");
+// ======= Select DOM elements =======
 const inputBox = document.querySelector(".input-todo input");
+const addBtn = document.querySelector(".input-todo button");
 const todoList = document.querySelector(".todo-list ul");
 const deleteAllBtn = document.querySelector(".info-box button");
+const pendingTasksNumb = document.querySelector(".pendingTasks");
 
-inputBox.addEventListener("keyup", () => {
-  if (inputBox.value.trim() !== "") {
-    addBtn.classList.add("active");
-  } else {
-    addBtn.classList.remove("active");
-  }
-});
-
-
+// ======= Show tasks from localStorage =======
 const showTasks = () => {
-    let getLocalStorageData = localStorage.getItem("todo");
-    let listArray = [];
+  const listArray = JSON.parse(localStorage.getItem("todo")) || [];
 
-    if (getLocalStorageData !== null) {
-       listArray = JSON.parse(getLocalStorageData);
-    }
-    
-    const pendingTasksNumb = document.querySelector(".pendingTasks");
-    pendingTasksNumb.textContent = `${listArray.length} تسک مانده`;
-    
-    if (listArray.length > 0) {
-        deleteAllBtn.classList.add("active");
-    } else {
-        deleteAllBtn.classList.remove("active");
-    }
-    
-    let newTag = "";
-    listArray.forEach((element, index) => {
-        newTag += `<li>${element}<span class="icon"><i class="fas fa-trash-alt" onclick="deleteTask(${index})"></i></span></li>`;
-    });
-    
-    todoList.innerHTML = newTag;
+  // Build list items
+  todoList.innerHTML = listArray
+    .map(
+      (task, index) => `
+        <li>
+          ${task}
+          <span class="icon">
+            <i class="fas fa-trash-alt" onclick="deleteTask(${index})"></i>
+          </span>
+        </li>
+      `,
+    )
+    .join("");
+
+  // Update pending tasks count
+  pendingTasksNumb.textContent = `${listArray.length} تسک مانده`;
+
+  // Toggle delete all button
+  deleteAllBtn.classList.toggle("active", listArray.length > 0);
 };
-showTasks();
 
-
-
+// ======= Add new task =======
 addBtn.addEventListener("click", () => {
-    const value = inputBox.value.trim();
-    if (value === "") return;
+  const value = inputBox.value.trim();
+  if (!value) return;
 
-  const getLocalStorageData = JSON.parse(localStorage.getItem("todo")) || [];
+  const todos = JSON.parse(localStorage.getItem("todo")) || [];
+  todos.push(value);
+  localStorage.setItem("todo", JSON.stringify(todos));
 
-  getLocalStorageData.push(inputBox.value.trim());
-  localStorage.setItem("todo", JSON.stringify(getLocalStorageData));
-
+  inputBox.value = "";
+  addBtn.classList.remove("active");
   showTasks();
-    addBtn.classList.remove("active");
-    inputBox.value = "";
-
 });
 
-
-
+// ======= Delete a single task =======
 const deleteTask = (index) => {
   const todos = JSON.parse(localStorage.getItem("todo")) || [];
   todos.splice(index, 1);
   localStorage.setItem("todo", JSON.stringify(todos));
   showTasks();
-}
+};
 
-
-
-deleteAllBtn.addEventListener("click", function () {
+// ======= Delete all tasks =======
+deleteAllBtn.addEventListener("click", () => {
   localStorage.removeItem("todo");
   showTasks();
 });
+
+// ======= Toggle add button on input =======
+inputBox.addEventListener("keyup", () => {
+  addBtn.classList.toggle("active", inputBox.value.trim() !== "");
+});
+
+// ======= Initial render =======
+document.addEventListener("DOMContentLoaded", showTasks);
