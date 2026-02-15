@@ -9,9 +9,9 @@ Users can easily add, delete, and track tasks with a responsive design and moder
 ## 📸 Screenshot
 
 
-| Sceenshot |
+| Screenshot |
 |-----------|
-| ![Sceenshot](Screenshots/Screenshot.png) |
+| ![Screenshot](Screenshots/Screenshot.png) |
 
 
 
@@ -35,6 +35,22 @@ Users can easily add, delete, and track tasks with a responsive design and moder
 - **JavaScript (Vanilla JS)** – Logic and functionality  
 - **Font Awesome** – Icons  
 - **Sahel Font** – Persian typography  
+
+---
+
+## 🧠 JavaScript Highlights
+
+- localStorage: save, get, update, delete tasks
+
+- Create & insert elements dynamically (createElement, append, prepend, before, after)
+
+- Event Delegation for delete actions
+
+- Array management & splice()
+
+- UI re-rendering & dataset usage
+
+- Clean separation of render, save, get functions
 
 ---
 

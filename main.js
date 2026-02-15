@@ -5,63 +5,71 @@ const todoList = document.querySelector(".todo-list ul");
 const deleteAllBtn = document.querySelector(".info-box button");
 const pendingTasksNumb = document.querySelector(".pendingTasks");
 
-// ======= Show tasks from localStorage =======
-const showTasks = () => {
-  const listArray = JSON.parse(localStorage.getItem("todo")) || [];
+// ======= Helpers =======
+const getTodos = () => JSON.parse(localStorage.getItem("todo")) || [];
+const setTodos = (todos) => localStorage.setItem("todo", JSON.stringify(todos));
 
-  // Build list items
-  todoList.innerHTML = listArray
-    .map(
-      (task, index) => `
-        <li>
-          ${task}
-          <span class="icon">
-            <i class="fas fa-trash-alt" onclick="deleteTask(${index})"></i>
-          </span>
-        </li>
-      `,
-    )
-    .join("");
+// ======= Render Tasks =======
+const renderTasks = () => {
+  const todos = getTodos();
 
-  // Update pending tasks count
-  pendingTasksNumb.textContent = `${listArray.length} تسک مانده`;
+  todoList.innerHTML = "";
 
-  // Toggle delete all button
-  deleteAllBtn.classList.toggle("active", listArray.length > 0);
+  todos.forEach((task, index) => {
+    const li = document.createElement("li");
+    li.textContent = task;
+
+    const span = document.createElement("span");
+    span.classList.add("icon");
+
+    const i = document.createElement("i");
+    i.className = "fas fa-trash-alt";
+    i.dataset.index = index;
+
+    span.appendChild(i);
+    li.appendChild(span);
+    todoList.appendChild(li);
+  });
+
+  pendingTasksNumb.textContent = `${todos.length} تسک مانده`;
+  deleteAllBtn.classList.toggle("active", todos.length > 0);
 };
 
-// ======= Add new task =======
+// ======= Add Task =======
 addBtn.addEventListener("click", () => {
   const value = inputBox.value.trim();
   if (!value) return;
 
-  const todos = JSON.parse(localStorage.getItem("todo")) || [];
+  const todos = getTodos();
   todos.push(value);
-  localStorage.setItem("todo", JSON.stringify(todos));
+  setTodos(todos);
 
   inputBox.value = "";
   addBtn.classList.remove("active");
-  showTasks();
+  renderTasks();
 });
 
-// ======= Delete a single task =======
-const deleteTask = (index) => {
-  const todos = JSON.parse(localStorage.getItem("todo")) || [];
-  todos.splice(index, 1);
-  localStorage.setItem("todo", JSON.stringify(todos));
-  showTasks();
-};
+// ======= Event Delegation =======
+todoList.addEventListener("click", (e) => {
+  if (e.target.classList.contains("fa-trash-alt")) {
+    const index = e.target.dataset.index;
+    const todos = getTodos();
+    todos.splice(index, 1);
+    setTodos(todos);
+    renderTasks();
+  }
+});
 
-// ======= Delete all tasks =======
+// ======= Delete All =======
 deleteAllBtn.addEventListener("click", () => {
   localStorage.removeItem("todo");
-  showTasks();
+  renderTasks();
 });
 
-// ======= Toggle add button on input =======
+// ======= Toggle Button =======
 inputBox.addEventListener("keyup", () => {
   addBtn.classList.toggle("active", inputBox.value.trim() !== "");
 });
 
-// ======= Initial render =======
-document.addEventListener("DOMContentLoaded", showTasks);
+// ======= Initial Render =======
+document.addEventListener("DOMContentLoaded", renderTasks);

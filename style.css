@@ -40,11 +40,7 @@ body {
 main {
   width: 100%;
 }
-.input-todo {
-  display: flex;
-  margin: 20px 0 15px 0;
-  overflow: hidden;
-}
+
 .input-todo input {
   width: 91%;
   height: 45px;
@@ -69,7 +65,35 @@ main {
 .input-todo button i {
   opacity: 0.5;
 }
+.todo-list {
+  max-height: 350px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.input-todo {
+  display: flex;
+  margin: 20px 0 15px 0;
+  overflow: hidden;
+}
+.todo-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todo-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.todo-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.todo-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
 .todo-list li {
+  word-break: break-word;
   list-style: none;
   display: flex;
   justify-content: space-between;
